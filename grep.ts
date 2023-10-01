@@ -18,13 +18,15 @@ export async function grep(
             try {
                 let line = 1;
                 for await (const text of io.readLines(file)) {
-                    result.push({
-                        fileName: entry.path,
-                        line: line,
-                        text: text,
-                    });
+                    if (text.match(word)) {
+                        result.push({
+                            fileName: entry.path,
+                            line: line,
+                            text: text,
+                        });
+                    }
+                    line++;
                 }
-                line++;
             } finally {
                 file.close();
             }
